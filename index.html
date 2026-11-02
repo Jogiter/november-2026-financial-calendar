@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>2026年11月金融日历 · 美股 & 加密</title>
+<style>
+:root {
+  --bg: #0f1419;
+  --card: #1a2332;
+  --card-hover: #223044;
+  --text: #e8eaed;
+  --text-dim: #9aa0a6;
+  --accent: #8ab4f8;
+  --high: #f28b82;
+  --medium: #fdd663;
+  --earnings: #81c995;
+  --crypto: #c58af9;
+  --political: #fcad70;
+  --holiday: #5f6368;
+  --border: #2d3748;
+  --shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 12px;
+  padding-bottom: 80px;
+}
+header {
+  text-align: center;
+  padding: 16px 0 12px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+header h1 { font-size: 1.35rem; font-weight: 700; }
+header p { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+}
+.tab {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  background: var(--card);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab.active { background: var(--accent); color: #0f1419; border-color: var(--accent); font-weight: 600; }
+.calendar {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.cal-header h2 { font-size: 1.1rem; }
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.day:hover, .day.selected { background: var(--card-hover); }
+.day.empty { visibility: hidden; }
+.day.has-event { font-weight: 600; }
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 2px;
+}
+.dot.high { background: var(--high); }
+.dot.medium { background: var(--medium); }
+.dot.earnings { background: var(--earnings); }
+.dot.crypto { background: var(--crypto); }
+.dot.political { background: var(--political); }
+.section {
+  margin-bottom: 20px;
+}
+.section h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.event-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border-left: 4px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.event-card.high { border-left-color: var(--high); }
+.event-card.medium { border-left-color: var(--medium); }
+.event-card.earnings { border-left-color: var(--earnings); }
+.event-card.crypto { border-left-color: var(--crypto); }
+.event-card.political { border-left-color: var(--political); }
+.event-card.holiday { border-left-color: var(--holiday); }
+.event-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.event-meta {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.badge {
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: #2d3748;
+  white-space: nowrap;
+}
+.badge.high { background: #5c2b2b; color: var(--high); }
+.badge.medium { background: #5c4d1e; color: var(--medium); }
+.badge.earnings { background: #1e3a2f; color: var(--earnings); }
+.badge.crypto { background: #3a2a4a; color: var(--crypto); }
+.badge.political { background: #4a3a1e; color: var(--political); }
+.priority-list { display: flex; flex-direction: column; gap: 8px; }
+.priority-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--card);
+  padding: 12px;
+  border-radius: 12px;
+}
+.priority-num {
+  background: var(--accent);
+  color: #0f1419;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.notes {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+.notes strong { color: var(--text); }
+.day-detail {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: none;
+}
+.day-detail.show { display: block; }
+.day-detail h3 { margin-bottom: 10px; }
+footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 24px;
+  padding: 12px;
+}
+@media (min-width: 480px) {
+  body { max-width: 480px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>2026年11月金融日历</h1>
+  <p>美股 & 加密货币 · 高影响力事件</p>
+  <p id="data-status" style="font-size:0.75rem;color:var(--text-dim);margin-top:2px;">数据加载中...</p>
+</header>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="calendar">日历</div>
+  <div class="tab" data-tab="timeline">时间线</div>
+  <div class="tab" data-tab="priority">关注优先级</div>
+  <div class="tab" data-tab="notes">注意事项</div>
+</div>
+
+<div id="view-calendar">
+  <div class="calendar">
+    <div class="cal-header">
+      <h2>2026年11月</h2>
+      <span style="font-size:0.8rem;color:var(--text-dim)">点击日期查看详情</span>
+    </div>
+    <div class="weekdays">
+      <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+    </div>
+    <div class="days" id="calendar-days"></div>
+  </div>
+  <div class="day-detail" id="day-detail">
+    <h3 id="day-detail-title">选择日期</h3>
+    <div id="day-detail-content"></div>
+  </div>
+</div>
+
+<div id="view-timeline" style="display:none">
+  <div class="section">
+    <h3>高影响力宏观 & 政治</h3>
+    <div id="timeline-macro"></div>
+  </div>
+  <div class="section">
+    <h3>重要财报</h3>
+    <div id="timeline-earnings"></div>
+  </div>
+  <div class="section">
+    <h3>加密相关</h3>
+    <div id="timeline-crypto"></div>
+  </div>
+</div>
+
+<div id="view-priority" style="display:none">
+  <div class="priority-list" id="priority-list"></div>
+</div>
+
+<div id="view-notes" style="display:none">
+  <div class="notes">
+    <p><strong>本月无FOMC利率决议</strong>，下一次是12月8-9日（决议在9日，含SEP点阵图）。</p>
+    <br>
+    <p><strong>假期与流动性：</strong></p>
+    <p>• 11月11日老兵节：债券市场休市，股票开市</p>
+    <p>• 11月26日感恩节：美股休市</p>
+    <p>• 11月27日：提前收市，流动性变薄</p>
+    <br>
+    <p><strong>交易建议：</strong>数据公布前后波动率通常上升。美股与加密高度相关，宏观数据往往比单一代币事件更决定大方向。仓位和杠杆需谨慎。</p>
+    <br>
+    <p style="font-size:0.78rem;">时间换算：11月美东标准时间（EST, UTC-5）与北京时间（UTC+8）相差13小时。盘后事件通常在美东16:00后发布，对应北京时间次日凌晨约05:00左右。</p>
+    <br>
+    <p style="font-size:0.78rem;"><strong>数据更新机制：</strong>页面优先加载 GitHub 仓库的 <code>events.json</code>（由Grok监控并维护）。加载失败时自动回退到内置数据。发现新的高影响力事件时，更新 JSON 文件即可，刷新页面即生效。</p>
+  </div>
+</div>
+
+<footer>
+  仅供参考，不构成投资建议 · 更新于 2026-11-02
+</footer>
+
+<script>
+// 本地回退数据（当远程 JSON 加载失败时使用）
+const fallbackEvents = [
+  { date: 2, title: "ISM制造业PMI", time: "10:00 ET", beijing: "23:00", impact: "medium", category: "macro", desc: "10月数据，制造业景气度" },
+  { date: 2, title: "Apple (AAPL) 财报", time: "盘后 (约16:00+ ET)", beijing: "次日约05:00+", impact: "earnings", category: "earnings", desc: "权重股，影响科技板块开盘情绪" },
+  { date: 2, title: "Palantir (PLTR) 财报", time: "盘后 (约16:00+ ET)", beijing: "次日约05:00+", impact: "earnings", category: "earnings", desc: "AI软件关注度高" },
+  { date: 3, title: "美国中期选举", time: "全天", beijing: "全天", impact: "political", category: "political", desc: "众议院全部+参议院35席。影响财政、税收、AI/加密监管立法" },
+  { date: 3, title: "JOLTS职位空缺", time: "10:00 ET", beijing: "23:00", impact: "medium", category: "macro", desc: "劳动力市场需求指标" },
+  { date: 3, title: "AMD 财报", time: "盘后 (约16:00+ ET)", beijing: "次日约05:00+", impact: "earnings", category: "earnings", desc: "半导体重要读数，对NVDA有参考" },
+  { date: 4, title: "ADP就业", time: "08:15 ET", beijing: "21:15", impact: "medium", category: "macro", desc: "非农前哨" },
+  { date: 4, title: "ISM服务业PMI", time: "10:00 ET", beijing: "23:00", impact: "medium", category: "macro", desc: "服务业占美国经济大头" },
+  { date: 4, title: "Qualcomm / ARM 财报", time: "盘后 (约16:00+ ET)", beijing: "次日约05:00+", impact: "earnings", category: "earnings", desc: "半导体与手机芯片" },
+  { date: 6, title: "非农就业报告 (NFP)", time: "08:30 ET", beijing: "21:30", impact: "high", category: "macro", desc: "极高影响。就业、失业率、时薪。直接关系到美联储路径与风险资产" },
+  { date: 10, title: "CPI通胀", time: "08:30 ET", beijing: "21:30", impact: "high", category: "macro", desc: "本月最关键通胀数据。核心CPI月环比对利率预期影响极大" },
+  { date: 11, title: "老兵节", time: "全天", beijing: "全天", impact: "holiday", category: "holiday", desc: "债券市场休市，股票开市" },
+  { date: 13, title: "PPI生产者物价指数", time: "08:30 ET", beijing: "21:30", impact: "high", category: "macro", desc: "上游通胀，CPI先行信号" },
+  { date: 17, title: "零售销售", time: "08:30 ET", beijing: "21:30", impact: "medium", category: "macro", desc: "消费韧性" },
+  { date: 17, title: "Nvidia (NVDA) 财报", time: "盘后 (约16:20 ET)", beijing: "次日约05:20", impact: "earnings", category: "earnings", desc: "AI龙头，对科技股与加密风险偏好影响极大" },
+  { date: 18, title: "FOMC会议纪要", time: "14:00 ET", beijing: "次日03:00", impact: "high", category: "macro", desc: "10月会议纪要，解读内部讨论" },
+  { date: 25, title: "PCE通胀 + Q3 GDP", time: "08:30 ET", beijing: "21:30", impact: "high", category: "macro", desc: "PCE是美联储最关注的通胀指标，对12月FOMC有直接影响" },
+  { date: 26, title: "感恩节", time: "全天", beijing: "全天", impact: "holiday", category: "holiday", desc: "美股休市" },
+  { date: 27, title: "提前收市 + BTC/ETH期权到期", time: "约08:00 UTC", beijing: "16:00", impact: "crypto", category: "crypto", desc: "流动性变薄 + 月度期权到期，波动可能加大" },
+];
+
+let events = [...fallbackEvents];
+let dataSource = "本地回退";
+let dataUpdatedAt = "内置";
+
+async function loadEvents() {
+  const statusEl = document.getElementById("data-status");
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/Jogiter/november-2026-financial-calendar/main/events.json?t=" + Date.now());
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (Array.isArray(data.events)) {
+      events = data.events.map(e => ({
+        date: parseInt(e.date.split("-")[2], 10),
+        title: e.title,
+        time: e.time_et + (e.time_et.includes("ET") || e.time_et.includes("全天") || e.time_et.includes("盘后") || e.time_et.includes("UTC") ? "" : " ET"),
+        beijing: e.time_beijing,
+        impact: e.impact,
+        category: e.category,
+        desc: e.desc
+      }));
+      dataSource = "远程 JSON";
+      dataUpdatedAt = data.updated_at ? data.updated_at.slice(0, 16).replace("T", " ") : "未知";
+      statusEl.textContent = `数据来源：远程 JSON · 更新于 ${dataUpdatedAt} UTC`;
+    } else {
+      throw new Error("无效格式");
+    }
+  } catch (err) {
+    console.warn("远程数据加载失败，使用本地回退:", err.message);
+    statusEl.textContent = "数据来源：本地回退（远程加载失败）";
+    events = [...fallbackEvents];
+  }
+  // 重新渲染所有视图
+  renderCalendar();
+  renderTimeline();
+  renderPriority();
+  // 自动选中今天
+  const today = new Date().getDate();
+  if (today >= 1 && today <= 30) setTimeout(() => selectDay(today), 100);
+}
+
+const priorities = [
+  { num: 1, title: "11月6日非农 + 11月10日CPI", desc: "本月最核心的两个数据，决定利率预期主线" },
+  { num: 2, title: "11月3日中期选举", desc: "政治不确定性，影响监管与财政政策预期" },
+  { num: 3, title: "11月17日Nvidia财报", desc: "科技与风险情绪风向标" },
+  { num: 4, title: "11月25日PCE", desc: "美联储最看重的通胀指标" },
+  { num: 5, title: "本周苹果/AMD等财报", desc: "短期情绪催化剂" },
+];
+
+function renderCalendar() {
+  const daysEl = document.getElementById("calendar-days");
+  daysEl.innerHTML = "";
+  // Nov 1 2026 is Sunday
+  const firstDay = 0; // Sunday
+  const totalDays = 30;
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    empty.className = "day empty";
+    daysEl.appendChild(empty);
+  }
+  for (let d = 1; d <= totalDays; d++) {
+    const dayEl = document.createElement("div");
+    dayEl.className = "day";
+    dayEl.textContent = d;
+    const dayEvents = events.filter(e => e.date === d);
+    if (dayEvents.length) {
+      dayEl.classList.add("has-event");
+      const highest = dayEvents.reduce((a, b) => {
+        const order = { high: 4, political: 3, earnings: 2, medium: 1, crypto: 1, holiday: 0 };
+        return (order[b.impact] || 0) > (order[a.impact] || 0) ? b : a;
+      }, dayEvents[0]);
+      const dot = document.createElement("div");
+      dot.className = `dot ${highest.impact}`;
+      dayEl.appendChild(dot);
+    }
+    dayEl.onclick = () => selectDay(d);
+    daysEl.appendChild(dayEl);
+  }
+}
+
+function selectDay(d) {
+  document.querySelectorAll(".day").forEach(el => el.classList.remove("selected"));
+  const dayEls = document.querySelectorAll(".day:not(.empty)");
+  dayEls[d-1]?.classList.add("selected");
+  const detail = document.getElementById("day-detail");
+  const title = document.getElementById("day-detail-title");
+  const content = document.getElementById("day-detail-content");
+  const dayEvents = events.filter(e => e.date === d);
+  title.textContent = `11月${d}日`;
+  if (!dayEvents.length) {
+    content.innerHTML = "<p style='color:var(--text-dim)'>暂无重要事件</p>";
+  } else {
+    content.innerHTML = dayEvents.map(e => `
+      <div class="event-card ${e.impact}" style="margin-bottom:8px">
+        <div class="event-title">${e.title} <span class="badge ${e.impact}">${impactLabel(e.impact)}</span></div>
+        <div class="event-meta">${e.time} / 北京时间 ${e.beijing}<br>${e.desc}</div>
+      </div>
+    `).join("");
+  }
+  detail.classList.add("show");
+  detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function impactLabel(imp) {
+  const map = { high: "高影响", medium: "中等", earnings: "财报", crypto: "加密", political: "政治", holiday: "假期" };
+  return map[imp] || imp;
+}
+
+function renderTimeline() {
+  const macro = events.filter(e => ["macro","political","holiday"].includes(e.category));
+  const earnings = events.filter(e => e.category === "earnings");
+  const crypto = events.filter(e => e.category === "crypto");
+  document.getElementById("timeline-macro").innerHTML = macro.map(e => eventCardHTML(e)).join("");
+  document.getElementById("timeline-earnings").innerHTML = earnings.map(e => eventCardHTML(e)).join("");
+  document.getElementById("timeline-crypto").innerHTML = crypto.map(e => eventCardHTML(e)).join("") || "<p style='color:var(--text-dim);padding:8px'>本月无重大链上升级，主要为代币解锁与会议</p>";
+}
+
+function eventCardHTML(e) {
+  return `
+    <div class="event-card ${e.impact}">
+      <div class="event-title">${e.title} <span class="badge ${e.impact}">${impactLabel(e.impact)}</span></div>
+      <div class="event-meta">11月${e.date}日 · ${e.time} / 北京时间 ${e.beijing}<br>${e.desc}</div>
+    </div>
+  `;
+}
+
+function renderPriority() {
+  document.getElementById("priority-list").innerHTML = priorities.map(p => `
+    <div class="priority-item">
+      <div class="priority-num">${p.num}</div>
+      <div>
+        <div style="font-weight:600">${p.title}</div>
+        <div style="font-size:0.85rem;color:var(--text-dim);margin-top:2px">${p.desc}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    ["calendar","timeline","priority","notes"].forEach(v => {
+      document.getElementById("view-" + v).style.display = "none";
+    });
+    document.getElementById("view-" + tab.dataset.tab).style.display = "block";
+    if (tab.dataset.tab === "calendar") {
+      document.getElementById("day-detail").classList.remove("show");
+    }
+  };
+});
+
+renderCalendar();
+renderTimeline();
+renderPriority();
+// 启动时加载远程数据
+loadEvents();
+</script>
+</body>
+</html>
