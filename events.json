@@ -1,0 +1,197 @@
+{
+  "version": "2026-11-02-v1",
+  "updated_at": "2026-11-02T09:50:00Z",
+  "note": "高影响力事件，聚焦美股与加密。由Grok维护，发现新事件或日期变动时更新此文件。",
+  "events": [
+    {
+      "id": "2026-11-02-ism-mfg",
+      "date": "2026-11-02",
+      "title": "ISM制造业PMI",
+      "time_et": "10:00",
+      "time_beijing": "23:00",
+      "impact": "medium",
+      "category": "macro",
+      "desc": "10月数据，制造业景气度"
+    },
+    {
+      "id": "2026-11-02-aapl",
+      "date": "2026-11-02",
+      "title": "Apple (AAPL) 财报",
+      "time_et": "盘后 (约16:00+)",
+      "time_beijing": "次日约05:00+",
+      "impact": "earnings",
+      "category": "earnings",
+      "desc": "权重股，影响科技板块开盘情绪"
+    },
+    {
+      "id": "2026-11-02-pltr",
+      "date": "2026-11-02",
+      "title": "Palantir (PLTR) 财报",
+      "time_et": "盘后 (约16:00+)",
+      "time_beijing": "次日约05:00+",
+      "impact": "earnings",
+      "category": "earnings",
+      "desc": "AI软件关注度高"
+    },
+    {
+      "id": "2026-11-03-midterms",
+      "date": "2026-11-03",
+      "title": "美国中期选举",
+      "time_et": "全天",
+      "time_beijing": "全天",
+      "impact": "political",
+      "category": "political",
+      "desc": "众议院全部+参议院35席。影响财政、税收、AI/加密监管立法"
+    },
+    {
+      "id": "2026-11-03-jolts",
+      "date": "2026-11-03",
+      "title": "JOLTS职位空缺",
+      "time_et": "10:00",
+      "time_beijing": "23:00",
+      "impact": "medium",
+      "category": "macro",
+      "desc": "劳动力市场需求指标"
+    },
+    {
+      "id": "2026-11-03-amd",
+      "date": "2026-11-03",
+      "title": "AMD 财报",
+      "time_et": "盘后 (约16:00+)",
+      "time_beijing": "次日约05:00+",
+      "impact": "earnings",
+      "category": "earnings",
+      "desc": "半导体重要读数，对NVDA有参考"
+    },
+    {
+      "id": "2026-11-04-adp",
+      "date": "2026-11-04",
+      "title": "ADP就业",
+      "time_et": "08:15",
+      "time_beijing": "21:15",
+      "impact": "medium",
+      "category": "macro",
+      "desc": "非农前哨"
+    },
+    {
+      "id": "2026-11-04-ism-svc",
+      "date": "2026-11-04",
+      "title": "ISM服务业PMI",
+      "time_et": "10:00",
+      "time_beijing": "23:00",
+      "impact": "medium",
+      "category": "macro",
+      "desc": "服务业占美国经济大头"
+    },
+    {
+      "id": "2026-11-04-qcom",
+      "date": "2026-11-04",
+      "title": "Qualcomm / ARM 财报",
+      "time_et": "盘后 (约16:00+)",
+      "time_beijing": "次日约05:00+",
+      "impact": "earnings",
+      "category": "earnings",
+      "desc": "半导体与手机芯片"
+    },
+    {
+      "id": "2026-11-06-nfp",
+      "date": "2026-11-06",
+      "title": "非农就业报告 (NFP)",
+      "time_et": "08:30",
+      "time_beijing": "21:30",
+      "impact": "high",
+      "category": "macro",
+      "desc": "极高影响。就业、失业率、时薪。直接关系到美联储路径与风险资产"
+    },
+    {
+      "id": "2026-11-10-cpi",
+      "date": "2026-11-10",
+      "title": "CPI通胀",
+      "time_et": "08:30",
+      "time_beijing": "21:30",
+      "impact": "high",
+      "category": "macro",
+      "desc": "本月最关键通胀数据。核心CPI月环比对利率预期影响极大"
+    },
+    {
+      "id": "2026-11-11-veterans",
+      "date": "2026-11-11",
+      "title": "老兵节",
+      "time_et": "全天",
+      "time_beijing": "全天",
+      "impact": "holiday",
+      "category": "holiday",
+      "desc": "债券市场休市，股票开市"
+    },
+    {
+      "id": "2026-11-13-ppi",
+      "date": "2026-11-13",
+      "title": "PPI生产者物价指数",
+      "time_et": "08:30",
+      "time_beijing": "21:30",
+      "impact": "high",
+      "category": "macro",
+      "desc": "上游通胀，CPI先行信号"
+    },
+    {
+      "id": "2026-11-17-retail",
+      "date": "2026-11-17",
+      "title": "零售销售",
+      "time_et": "08:30",
+      "time_beijing": "21:30",
+      "impact": "medium",
+      "category": "macro",
+      "desc": "消费韧性"
+    },
+    {
+      "id": "2026-11-17-nvda",
+      "date": "2026-11-17",
+      "title": "Nvidia (NVDA) 财报",
+      "time_et": "盘后 (约16:20)",
+      "time_beijing": "次日约05:20",
+      "impact": "earnings",
+      "category": "earnings",
+      "desc": "AI龙头，对科技股与加密风险偏好影响极大"
+    },
+    {
+      "id": "2026-11-18-fomc-minutes",
+      "date": "2026-11-18",
+      "title": "FOMC会议纪要",
+      "time_et": "14:00",
+      "time_beijing": "次日03:00",
+      "impact": "high",
+      "category": "macro",
+      "desc": "10月会议纪要，解读内部讨论"
+    },
+    {
+      "id": "2026-11-25-pce-gdp",
+      "date": "2026-11-25",
+      "title": "PCE通胀 + Q3 GDP",
+      "time_et": "08:30",
+      "time_beijing": "21:30",
+      "impact": "high",
+      "category": "macro",
+      "desc": "PCE是美联储最关注的通胀指标，对12月FOMC有直接影响"
+    },
+    {
+      "id": "2026-11-26-thanksgiving",
+      "date": "2026-11-26",
+      "title": "感恩节",
+      "time_et": "全天",
+      "time_beijing": "全天",
+      "impact": "holiday",
+      "category": "holiday",
+      "desc": "美股休市"
+    },
+    {
+      "id": "2026-11-27-options",
+      "date": "2026-11-27",
+      "title": "提前收市 + BTC/ETH期权到期",
+      "time_et": "约08:00 UTC",
+      "time_beijing": "16:00",
+      "impact": "crypto",
+      "category": "crypto",
+      "desc": "流动性变薄 + 月度期权到期，波动可能加大"
+    }
+  ]
+}
